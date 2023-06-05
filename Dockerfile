@@ -18,6 +18,3 @@ RUN --mount=type=cache,target=/home/root/.cache/pip \
   --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
   --mount=type=bind,source=README.md,target=README.md \
   pip install .
-
-# Run application
-CMD ["python", "-m", "python_template_project.app" ]
