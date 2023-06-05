@@ -58,7 +58,9 @@
                 pkgs.python3
                 pkgs.cudaPackages.cudatoolkit
                 pkgs.cudaPackages.cudnn
-                pkgs.google-cloud-sdk
+                (pkgs.google-cloud-sdk.withExtraComponents [
+                  pkgs.google-cloud-sdk.components.gsutil
+                ])
               ];
             }
           ];
