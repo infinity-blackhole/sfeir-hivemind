@@ -10,6 +10,7 @@
     "bungcip.better-toml",
     "tamasfe.even-better-toml",
     "ms-vscode.makefile-tools",
-    "esbenp.prettier-vscode"
-  ],
+    "esbenp.prettier-vscode",
+    "ms-toolsai.jupyter"
+  ]
 }

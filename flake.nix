@@ -53,6 +53,7 @@
                 isort.enable = true;
               };
               packages = [
+                pkgs.stdenv.cc.cc.lib
                 pkgs.hatch
                 pkgs.python3
                 pkgs.cudaPackages.cudatoolkit

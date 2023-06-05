@@ -22,7 +22,10 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = ["langchain[llms] >=0.0.190,<0.1"]
+dependencies = [
+  "langchain[llms]>=0.0.190,<0.1",
+  "google-cloud-aiplatform>=1.25.0,<2.0",
+]
 dynamic = ["version"]
 
 [project.urls]
