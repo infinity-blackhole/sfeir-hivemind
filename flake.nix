@@ -20,7 +20,13 @@
 
   outputs = { nixpkgs, devenv, ... }@inputs: {
     devShells = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.unix (system:
-      let pkgs = import nixpkgs { inherit system; }; in {
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      in
+      {
         default = devenv.lib.mkShell {
           inherit inputs pkgs;
           modules = [
@@ -49,6 +55,8 @@
               packages = [
                 pkgs.hatch
                 pkgs.python3
+                pkgs.cudaPackages.cudatoolkit
+                pkgs.cudaPackages.cudnn
               ];
             }
           ];
