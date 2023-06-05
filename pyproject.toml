@@ -22,7 +22,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = ["langchain[llms] >=0.0.190,<0.1"]
 dynamic = ["version"]
 
 [project.urls]
@@ -34,10 +34,7 @@ Source = "https://github.com/infinity-blackhole/python-root-commit"
 path = "python_template_project/__about__.py"
 
 [tool.hatch.envs.default]
-dependencies = [
-  "pytest",
-  "pytest-cov",
-]
+dependencies = ["pytest", "pytest-cov"]
 
 [tool.hatch.envs.default.scripts]
 cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=python_template_project --cov=tests {args}"
@@ -49,16 +46,10 @@ python = ["38", "39", "310", "311"]
 [tool.coverage.run]
 branch = true
 parallel = true
-omit = [
-  "python_template_project/__about__.py",
-]
+omit = ["python_template_project/__about__.py"]
 
 [tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
-]
+exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 
 [tool.isort]
 profile = "black"
