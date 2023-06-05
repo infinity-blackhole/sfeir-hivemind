@@ -25,18 +25,14 @@ classifiers = [
 dependencies = [
   "langchain[llms]>=0.0.190,<0.1",
   "google-cloud-aiplatform>=1.25.0,<2.0",
+  "Pillow>=9.5,<10",
+  "transformers>=4.29,<5",
+  "chromadb>=0.3,<0.4",
 ]
 dynamic = ["version"]
 
 [project.optional-dependencies]
-jupyter = [
-  "IProgress",
-  "ipywidgets",
-  "ipykernel",
-  "pillow",
-  "transformers",
-  "chromadb",
-]
+jupyter = ["IProgress", "ipywidgets", "ipykernel"]
 
 [project.urls]
 Documentation = "https://github.com/infinity-blackhole/python-root-commit#readme"
