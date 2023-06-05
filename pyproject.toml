@@ -28,6 +28,9 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[project.optional-dependencies]
+jupyter = ["IProgress", "ipywidgets", "ipykernel", "pillow"]
+
 [project.urls]
 Documentation = "https://github.com/infinity-blackhole/python-root-commit#readme"
 Issues = "https://github.com/infinity-blackhole/python-root-commit/issues"
