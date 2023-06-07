@@ -1,11 +1,11 @@
-# Python Template Project
+# Sfeir Hivemind
 
-[![PyPI - Version](https://img.shields.io/pypi/v/python-template-project.svg)](https://pypi.org/project/python-template-project)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/python-template-project.svg)](https://pypi.org/project/python-template-project)
+[![PyPI - Version](https://img.shields.io/pypi/v/sfeir-hivemind.svg)](https://pypi.org/project/sfeir-hivemind)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sfeir-hivemind.svg)](https://pypi.org/project/sfeir-hivemind)
 
 ## Table of Contents
 
-- [Python Template Project](#python-template-project)
+- [Sfeir Hivemind](#sfeir-hivemind)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [License](#license)
@@ -13,10 +13,10 @@
 ## Installation
 
 ```console
-pip install python-template-project
+pip install sfeir-hivemind
 ```
 
 ## License
 
-`python-template-project` is distributed under the terms of the
+`sfeir-hivemind` is distributed under the terms of the
 [MIT](https://spdx.org/licenses/MIT.html) license.

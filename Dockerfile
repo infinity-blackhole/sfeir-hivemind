@@ -14,7 +14,7 @@ FROM base
 # Install application
 # hadolint ignore=DL3042
 RUN --mount=type=cache,target=/home/root/.cache/pip \
-  --mount=type=bind,source=python_template_project,target=python_template_project \
+  --mount=type=bind,source=sfeir_hivemind,target=sfeir_hivemind \
   --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
   --mount=type=bind,source=README.md,target=README.md \
   pip install .

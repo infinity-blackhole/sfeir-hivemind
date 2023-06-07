@@ -3,6 +3,6 @@
   "python.linting.mypyEnabled": true,
   "python.testing.pytestEnabled": true,
   "python.testing.pytestArgs": [
-    "python_template_project"
+    "sfeir_hivemind"
   ]
 }

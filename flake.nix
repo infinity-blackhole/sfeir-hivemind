@@ -1,5 +1,5 @@
 {
-  description = "Python template project";
+  description = "Sfeir Hivemind";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/release-22.11";
