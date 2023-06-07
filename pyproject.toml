@@ -28,6 +28,10 @@ dependencies = [
   "Pillow>=9.5,<10",
   "transformers>=4.29,<5",
   "chromadb>=0.3,<0.4",
+  "google-api-python-client>=2.88,<3",
+  "google-auth-httplib2>=0.1,<1",
+  "google-auth-oauthlib>=1.0,<2",
+  "PyPDF2>=3.0,<4",
 ]
 dynamic = ["version"]
 
