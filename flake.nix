@@ -2,7 +2,7 @@
   description = "Sfeir Hivemind";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/release-22.11";
+    nixpkgs.url = "github:nixos/nixpkgs/release-23.05";
     devenv = {
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,6 +45,8 @@
                 pkgs.nixpkgs-fmt
                 pkgs.docker
                 pkgs.nodejs
+                pkgs.glab
+                pkgs.gh
               ];
             }
             {
