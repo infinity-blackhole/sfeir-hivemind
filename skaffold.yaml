@@ -5,8 +5,10 @@ metadata:
 build:
   artifacts:
     - image: europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
-      docker:
-        dockerfile: Dockerfile
+      custom:
+        buildCommand: |
+          python -m sfeir.hivemind.build \
+            -t europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
   local:
     useBuildkit: true
 profiles:

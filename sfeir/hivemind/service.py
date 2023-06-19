@@ -24,7 +24,7 @@ qa = ConversationalRetrievalChain.from_llm(
     verbose=True,
 )
 
-svc = bentoml.Service("sfeir_hivemind")
+svc = bentoml.Service("sfeir-hivemind")
 
 
 @svc.on_startup
