@@ -1,5 +1,5 @@
 .PHONY: all
-all: sync gen
+all: sync gen containers
 
 gen:
 	@python -m grpc_tools.protoc \
@@ -16,3 +16,7 @@ gen:
 .PHONY: sync
 sync:
 	@hatch dep show requirements --project-only > requirements.txt
+
+.PHONY: containers
+containers:
+	@skaffold build

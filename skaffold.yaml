@@ -1,0 +1,21 @@
+apiVersion: skaffold/v4beta5
+kind: Config
+metadata:
+  name: sfeir-hivemind
+build:
+  artifacts:
+    - image: gcr.io/shikanime-studio/sfeir-hivemind-containers
+      docker:
+        dockerfile: Dockerfile
+  local:
+    useBuildkit: true
+profiles:
+  - name: shikanime-studio
+    manifests:
+      kustomize:
+        paths:
+          - manifests/overlays/default
+    deploy:
+      cloudrun:
+        projectid: shikanime-studio
+        region: europe-west1
