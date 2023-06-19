@@ -1,4 +1,5 @@
 import argparse
+import subprocess
 
 import bentoml
 
@@ -6,6 +7,7 @@ import bentoml
 def parse_opts():
     parser = argparse.ArgumentParser()
     parser.add_argument("--tag", "-t", type=str, required=True)
+    parser.add_argument("--push", action="store_true")
     return parser.parse_args()
 
 
@@ -35,6 +37,9 @@ def run(opts: argparse.Namespace):
     bentoml.container.build(
         bento.tag, image_tag=tuple(opts.tag.split(":")), features=["grpc", "tracing"]
     )
+
+    if opts.push:
+        subprocess.run(["docker", "push", opts.tag])
 
 
 if __name__ == "__main__":

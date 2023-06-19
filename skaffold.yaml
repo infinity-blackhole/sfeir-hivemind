@@ -7,8 +7,11 @@ build:
     - image: europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
       custom:
         buildCommand: |
-          python -m sfeir.hivemind.build \
-            -t europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
+          if [ -z "$PUSH_IMAGE" ]; then
+            python -m sfeir.hivemind.build -t $IMAGE
+          else
+            python -m sfeir.hivemind.build -t $IMAGE --push
+          fi
   local:
     useBuildkit: true
 profiles:
