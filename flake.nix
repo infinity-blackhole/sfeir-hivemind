@@ -47,6 +47,8 @@
                 pkgs.nodejs
                 pkgs.glab
                 pkgs.gh
+                pkgs.skaffold
+                pkgs.openjdk
               ];
             }
             {

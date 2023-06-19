@@ -15,9 +15,9 @@ def parse_opt():
 
 def run(opts: argparse.Namespace):
     with grpc.insecure_channel(opts.host + ":" + opts.port) as channel:
-        stub = hivemind_pb2_grpc.GreeterStub(channel)
+        stub = hivemind_pb2_grpc.AgentStub(channel)
         response = stub.SayHello(hivemind_pb2.HelloRequest(name="you"))
-        print("Greeter client received: " + response.message)
+        print("Agent client received: " + response.message)
 
 
 if __name__ == "__main__":

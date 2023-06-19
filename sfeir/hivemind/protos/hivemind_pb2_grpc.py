@@ -7,7 +7,7 @@ from sfeir.hivemind.protos import (
 )
 
 
-class GreeterStub(object):
+class AgentStub(object):
     """The greeting service definition"""
 
     def __init__(self, channel):
@@ -17,13 +17,13 @@ class GreeterStub(object):
             channel: A grpc.Channel.
         """
         self.SayHello = channel.unary_unary(
-            "/sfeir.hivemind.protos.Greeter/SayHello",
+            "/sfeir.hivemind.protos.Agent/SayHello",
             request_serializer=sfeir_dot_hivemind_dot_protos_dot_hivemind__pb2.HelloRequest.SerializeToString,
             response_deserializer=sfeir_dot_hivemind_dot_protos_dot_hivemind__pb2.HelloReply.FromString,
         )
 
 
-class GreeterServicer(object):
+class AgentServicer(object):
     """The greeting service definition"""
 
     def SayHello(self, request, context):
@@ -33,7 +33,7 @@ class GreeterServicer(object):
         raise NotImplementedError("Method not implemented!")
 
 
-def add_GreeterServicer_to_server(servicer, server):
+def add_AgentServicer_to_server(servicer, server):
     rpc_method_handlers = {
         "SayHello": grpc.unary_unary_rpc_method_handler(
             servicer.SayHello,
@@ -42,13 +42,13 @@ def add_GreeterServicer_to_server(servicer, server):
         ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-        "sfeir.hivemind.protos.Greeter", rpc_method_handlers
+        "sfeir.hivemind.protos.Agent", rpc_method_handlers
     )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
 # This class is part of an EXPERIMENTAL API.
-class Greeter(object):
+class Agent(object):
     """The greeting service definition"""
 
     @staticmethod
@@ -67,7 +67,7 @@ class Greeter(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            "/sfeir.hivemind.protos.Greeter/SayHello",
+            "/sfeir.hivemind.protos.Agent/SayHello",
             sfeir_dot_hivemind_dot_protos_dot_hivemind__pb2.HelloRequest.SerializeToString,
             sfeir_dot_hivemind_dot_protos_dot_hivemind__pb2.HelloReply.FromString,
             options,

@@ -2,10 +2,16 @@ syntax = "proto3";
 
 package sfeir.hivemind.protos;
 
+import "google/api/annotations.proto";
+
 // The greeting service definition
-service Greeter {
+service Agent {
   // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc SayHello (HelloRequest) returns (HelloReply) {
+    option (google.api.http) = {
+      get: "/say"
+    };
+  }
 }
 
 // The request message containing the user's name
