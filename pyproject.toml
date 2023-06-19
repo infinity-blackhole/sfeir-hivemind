@@ -34,6 +34,7 @@ dependencies = [
   "PyPDF2>=3.0,<4",
   "sentence-transformers>=2.2,<3",
   "deeplake>=3.6,<4",
+  "grpcio>=1.54,<2",
 ]
 dynamic = ["version"]
 
@@ -49,7 +50,7 @@ Source = "https://github.com/infinity-blackhole/python-root-commit"
 path = "sfeir/hivemind/__about__.py"
 
 [tool.hatch.envs.default]
-dependencies = ["pytest", "pytest-cov"]
+dependencies = ["pytest", "pytest-cov", "grpcio-tools"]
 
 [tool.hatch.envs.default.scripts]
 cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=sfeir_hivemind --cov=tests {args}"
