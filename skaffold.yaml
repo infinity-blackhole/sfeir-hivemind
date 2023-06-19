@@ -4,7 +4,7 @@ metadata:
   name: sfeir-hivemind
 build:
   artifacts:
-    - image: gcr.io/shikanime-studio/sfeir-hivemind-containers
+    - image: europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
       docker:
         dockerfile: Dockerfile
   local:

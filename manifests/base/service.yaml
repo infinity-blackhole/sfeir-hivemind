@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-        - image: gcr.io/shikanime-studio/sfeir-hivemind-containers
+        - image: europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
           env:
             - name: PORT
               value: "8080"
