@@ -12,3 +12,13 @@
   value:
     name: DEEP_LAKE_DATASET_URI
     value: "gcs://shikanime-studio-hivemind-deep-lake-dataset/books/"
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: GOOGLE_CLOUD_PROJECT
+    value: "shikanime-studio"
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: GOOGLE_CLOUD_LOCATION
+    value: "us-centra1"
