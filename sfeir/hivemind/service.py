@@ -19,8 +19,6 @@ svc = bentoml.Service("sfeir-hivemind", runners=[vertexai_runner])
 
 
 @svc.api(input=Text(), output=Text())
-async def predict(question: str, context: bentoml.Context) -> str:
-    result = await vertexai_runner.predict.async_run(
-        {"question": question, "chat_history": []}
-    )
+def predict(question: str, context: bentoml.Context) -> str:
+    result = vertexai_runner.predict.run({"question": question, "chat_history": []})
     return result["answer"]
