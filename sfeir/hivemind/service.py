@@ -1,5 +1,5 @@
 import os
-from typing import cast
+from typing import Any, Literal
 
 import bentoml
 from bentoml.io import Text
@@ -8,44 +8,52 @@ from langchain.embeddings import VertexAIEmbeddings
 from langchain.llms import VertexAI
 from langchain.vectorstores import DeepLake
 
-svc = bentoml.Service("sfeir-hivemind")
 
+class VertexAIRunnable(bentoml.Runnable):
+    SUPPORTED_RESOURCES = ("cpu", "nvidia.com/gpu")
+    SUPPORTS_CPU_MULTI_THREADING = True
 
-@svc.on_startup
-async def on_startup(context: bentoml.Context):
-    project = os.environ.get("GOOGLE_CLOUD_PROJECT")
-    location = os.environ.get("GOOGLE_CLOUD_LOCATION")
-    if location != "us-central1":
-        raise bentoml.exceptions.InvalidArgument(
-            "Only us-central1 location is supported"
+    def __init__(
+        self, project: str, location: Literal["us-central1"], dataset_uri: str
+    ):
+        self.llm = VertexAI(project=project, location=location)
+        self.embeddings = VertexAIEmbeddings(project=project, location=location)
+        self.vectorstore = DeepLake(
+            dataset_path=dataset_uri,
+            embedding_function=self.embeddings,
+            read_only=True,
         )
-    dataset_path = os.environ.get("DEEP_LAKE_DATASET_URI")
-    if dataset_path is None:
-        raise bentoml.exceptions.InvalidArgument(
-            "DEEP_LAKE_DATASET_URI environment variable not set"
+        self.chain = ConversationalRetrievalChain.from_llm(
+            self.llm,
+            self.vectorstore.as_retriever(),
+            return_source_documents=True,
+            verbose=True,
         )
 
-    llm = context.state["llm"] = VertexAI(project=project, location=location)
-    embeddings = context.state["embeddings"] = VertexAIEmbeddings(
-        project=project, location=location
-    )
-    vectorstore = context.state["vectorstore"] = DeepLake(
-        dataset_path=dataset_path,
-        embedding_function=embeddings,
-        read_only=True,
-    )
-    _chain = context.state["chain"] = ConversationalRetrievalChain.from_llm(
-        llm,
-        vectorstore.as_retriever(),
-        return_source_documents=True,
-        verbose=True,
-    )
+    @bentoml.Runnable.method(batchable=False)
+    def predict(
+        self,
+        inputs: dict[str, Any],
+    ):
+        return self.chain(inputs)
+
+
+vertexai_runner = bentoml.Runner(
+    VertexAIRunnable,
+    name="sfeir-hivemind",
+    runnable_init_params={
+        "project": os.environ.get("GOOGLE_CLOUD_PROJECT"),
+        "location": "us-central1",
+        "dataset_uri": os.environ["DEEP_LAKE_DATASET_URI"],
+    },
+)
+
+svc = bentoml.Service("sfeir-hivemind", runners=[vertexai_runner])
 
 
 @svc.api(input=Text(), output=Text())
 async def classify(question: str, context: bentoml.Context) -> str:
-    chain = cast(ConversationalRetrievalChain, context.state.get("chain"))
-    if chain is None:
-        raise bentoml.exceptions.ServiceUnavailable("Model not ready")
-    result = chain({"question": question, "chat_history": []})
+    result = await vertexai_runner.predict.async_run(
+        {"question": question, "chat_history": []}
+    )
     return result["answer"]
