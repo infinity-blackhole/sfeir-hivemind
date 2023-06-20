@@ -1,6 +1,11 @@
 from pydantic import BaseModel
 
 
+class QuestionAnsweringRequest(BaseModel):
+    question: str
+    chat_history: list[str] = []
+
+
 class SourceDocument(BaseModel):
     page_content: str
     source: str
@@ -8,7 +13,7 @@ class SourceDocument(BaseModel):
     page: int
 
 
-class Output(BaseModel):
+class QuestionAnsweringResponse(BaseModel):
     question: str
     answer: str
     source_documents: list[SourceDocument]
