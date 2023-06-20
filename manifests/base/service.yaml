@@ -2,11 +2,13 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: sfeir-hivemind
+  annotations: {}
 spec:
   template:
+    metadata:
+      annotations: {}
     spec:
       containers:
-        - image: europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
-          env:
-            - name: HOST
-              value: "0.0.0.0"
+        - env: []
+          image: europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
+          name: bento

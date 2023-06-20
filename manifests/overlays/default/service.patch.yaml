@@ -1,0 +1,14 @@
+- op: add
+  path: /metadata/annotations/run.googleapis.com~1launch-stage
+  value: BETA
+- op: add
+  path: /spec/template/metadata/annotations/autoscaling.knative.dev~1maxScale
+  value: "1"
+- op: add
+  path: /spec/template/metadata/annotations/run.googleapis.com~1startup-cpu-boost
+  value: "true"
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: DEEP_LAKE_DATASET_URI
+    value: "gcs://shikanime-studio-labs-hivemind-deep-lake-dataset/books/"
