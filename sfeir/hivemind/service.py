@@ -9,8 +9,8 @@ vertexai_runner = bentoml.Runner(
     VertexAIRunnable,
     name="sfeir-hivemind",
     runnable_init_params={
-        "project": os.environ.get("GOOGLE_CLOUD_PROJECT"),
-        "location": os.environ.get("GOOGLE_CLOUD_LOCATION"),
+        "project": os.environ.get("VERTEX_AI_PROJECT"),
+        "location": os.environ.get("VERTEX_AI_LOCATION"),
         "dataset_uri": os.environ["DEEP_LAKE_DATASET_URI"],
     },
 )
