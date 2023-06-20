@@ -12,3 +12,6 @@ spec:
         - env: []
           image: europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
           name: bento
+          resources:
+            limits:
+              memory: 2Gi
