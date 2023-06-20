@@ -23,7 +23,6 @@ class VertexAIRunnable(bentoml.Runnable):
             self.llm,
             self.vectorstore.as_retriever(),
             return_source_documents=True,
-            verbose=True,
         )
 
     @bentoml.Runnable.method(batchable=False)
