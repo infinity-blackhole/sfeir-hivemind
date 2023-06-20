@@ -46,9 +46,9 @@ dynamic = ["version"]
 jupyter = ["IProgress", "ipywidgets", "ipykernel"]
 
 [project.urls]
-Documentation = "https://github.com/infinity-blackhole/python-root-commit#readme"
-Issues = "https://github.com/infinity-blackhole/python-root-commit/issues"
-Source = "https://github.com/infinity-blackhole/python-root-commit"
+Documentation = "https://github.com/infinity-blackhole/sfeir-hivemind#readme"
+Issues = "https://github.com/infinity-blackhole/sfeir-hivemind/issues"
+Source = "https://github.com/infinity-blackhole/sfeir-hivemind"
 
 [tool.hatch.version]
 path = "sfeir/hivemind/__about__.py"
