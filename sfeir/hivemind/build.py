@@ -1,20 +1,19 @@
 import argparse
+import logging
 
 import bentoml
 import docker
 
-
-def parse_opts():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--tag", "-t", type=str, required=True)
-    parser.add_argument("--push", action="store_true")
-    return parser.parse_args()
+_logger = logging.getLogger(__name__)
 
 
 def run(opts: argparse.Namespace):
     bento = bentoml.bentos.build(
         service="sfeir.hivemind.service:svc",
         include=["sfeir/hivemind/service.py"],
+        docker={
+            "python_version": "3.10",
+        },
         python={
             "packages": [
                 "deeplake<4,>=3.6.4",
@@ -29,19 +28,32 @@ def run(opts: argparse.Namespace):
                 "transformers<5,>=4.29",
             ]
         },
-        docker={
-            "python_version": "3.10",
-        },
     )
 
+    _logger.info(f"Built BentoML service {bento.tag}")
+
     bentoml.container.build(
-        bento.tag, image_tag=tuple(opts.tag.split(":")), features=["grpc", "tracing"]
+        bento.tag, image_tag=tuple(opts.tag), features=["grpc", "tracing"]
     )
+
+    _logger.info(f"Built Docker image {opts.tag} for BentoML service {bento.tag}")
 
     if opts.push:
         docker_client = docker.from_env()
-        docker_client.images.push(opts.tag)
+        for tag in opts.tag:
+            docker_client.images.push(tag)
+            _logger.info(f"Pushed Docker image {opts.tag}")
+    else:
+        _logger.info(f"Skipping Docker image push for {opts.tag}")
+
+
+def parse_opts():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--tag", "-t", type=str, nargs="+", required=True)
+    parser.add_argument("--push", action="store_true")
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
+    logging.basicConfig()
     run(parse_opts())
