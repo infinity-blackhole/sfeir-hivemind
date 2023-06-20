@@ -1,7 +1,7 @@
 import argparse
-import subprocess
 
 import bentoml
+import docker
 
 
 def parse_opts():
@@ -39,7 +39,8 @@ def run(opts: argparse.Namespace):
     )
 
     if opts.push:
-        subprocess.run(["docker", "push", opts.tag])
+        docker_client = docker.from_env()
+        docker_client.images.push(opts.tag)
 
 
 if __name__ == "__main__":

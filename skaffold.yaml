@@ -12,6 +12,10 @@ build:
           else
             python -m sfeir.hivemind.build -t $IMAGE --push
           fi
+        dependencies:
+          paths:
+            - sfeir/hivemind
+            - pyproject.toml
   local:
     useBuildkit: true
 profiles:
