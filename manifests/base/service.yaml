@@ -2,11 +2,14 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: sfeir-hivemind
-  annotations: {}
+  annotations:
+    run.googleapis.com/execution-environment: gen2
+    run.googleapis.com/launch-stage: BETA
 spec:
   template:
     metadata:
-      annotations: {}
+      annotations:
+        run.googleapis.com/startup-cpu-boost: "true"
     spec:
       containers:
         - env: []
@@ -25,7 +28,19 @@ spec:
             httpGet:
               path: /readyz
               port: 3000
-            initialDelaySeconds: 30
-          timeoutSeconds: 600
-          volumeMounts: []
-      volumes: []
+            initialDelaySeconds: 60
+          volumeMounts:
+            - mountPath: /home/bentoml/bentoml
+              name: bentoml
+            - mountPath: /home/bentoml/.cache/torch
+              name: torch-cache
+      timeoutSeconds: 600
+      volumes:
+        - name: bentoml
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Gi
+        - name: torch-cache
+          emptyDir:
+            medium: Memory
+            sizeLimit: 512Mi
