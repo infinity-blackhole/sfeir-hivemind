@@ -14,14 +14,20 @@ svc = bentoml.Service("sfeir-hivemind")
 
 @svc.on_startup
 async def on_startup(context: bentoml.Context):
-    project = os.environ.get("GOOGLE_CLOUD_PROJECT", None)
-    location = os.environ.get("GOOGLE_CLOUD_LOCATION", None)
+    project = os.environ.get("GOOGLE_CLOUD_PROJECT")
+    location = os.environ.get("GOOGLE_CLOUD_LOCATION")
+    dataset_path = os.environ.get("DEEP_LAKE_DATASET_URI")
+    if dataset_path is None:
+        raise bentoml.exceptions.InvalidArgument(
+            "DEEP_LAKE_DATASET_URI environment variable not set"
+        )
+
     vertexai.init(project=project, location=location)
 
     llm = context.state["llm"] = VertexAI()
     embeddings = context.state["embeddings"] = VertexAIEmbeddings()
     vectorstore = context.state["vectorstore"] = DeepLake(
-        dataset_path="gcs://shikanime-studio-labs-hivemind-deep-lake-dataset/books/",
+        dataset_path=dataset_path,
         embedding_function=embeddings,
         read_only=True,
     )
