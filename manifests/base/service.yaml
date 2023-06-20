@@ -15,3 +15,12 @@ spec:
           resources:
             limits:
               memory: 2Gi
+          startupProbe:
+            httpGet:
+              path: /readyz
+              port: 8080
+            initialDelaySeconds: 60
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: 8080
