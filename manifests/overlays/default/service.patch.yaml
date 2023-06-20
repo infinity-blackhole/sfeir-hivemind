@@ -11,4 +11,4 @@
   path: /spec/template/spec/containers/0/env/-
   value:
     name: DEEP_LAKE_DATASET_URI
-    value: "gcs://shikanime-studio-labs-hivemind-deep-lake-dataset/books/"
+    value: "gcs://shikanime-studio-hivemind-deep-lake-dataset/books/"
