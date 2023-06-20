@@ -11,6 +11,10 @@ spec:
       containers:
         - env: []
           image: europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: 8080
           name: bento
           resources:
             limits:
@@ -20,7 +24,4 @@ spec:
               path: /readyz
               port: 8080
             initialDelaySeconds: 60
-          livenessProbe:
-            httpGet:
-              path: /livez
-              port: 8080
+          timeoutSeconds: 600
