@@ -22,3 +22,13 @@
   value:
     name: VERTEX_AI_LOCATION
     value: "us-central1"
+- op: add
+  path: /spec/template/spec/volumes/-
+  value:
+    name: torch-cache
+    emptyDir: {}
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts/-
+  value:
+    name: torch-cache
+    mountPath: /home/bentoml/.cache/torch

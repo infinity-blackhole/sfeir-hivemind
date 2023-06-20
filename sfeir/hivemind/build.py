@@ -26,6 +26,7 @@ def run(opts: argparse.Namespace):
                 "langchain[llms]<0.1,>=0.0.190",
                 "pillow<10,>=9.5",
                 "protobuf<4,>=3.20.3",
+                "pydantic<2,>=1.10.9",
                 "pypdf2<4,>=3.0",
                 "sentence-transformers<3,>=2.2",
                 "transformers<5,>=4.29",
