@@ -28,8 +28,8 @@ svc = bentoml.Service("sfeir-hivemind", runners=[vertexai_runner])
     input=JSON(pydantic_model=QuestionAnsweringRequest),
     output=JSON(pydantic_model=QuestionAnsweringResponse),
 )
-def predict(question: QuestionAnsweringRequest) -> QuestionAnsweringResponse:
-    result = vertexai_runner.predict.run(question.dict())
+async def predict(question: QuestionAnsweringRequest) -> QuestionAnsweringResponse:
+    result = await vertexai_runner.predict.async_run(question.dict())
     return QuestionAnsweringResponse(
         question=result["question"],
         answer=result["answer"],
