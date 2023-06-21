@@ -16,7 +16,7 @@ def run(opts: argparse.Namespace):
         },
         python={
             "packages": [
-                "deeplake<4,>=3.6.4",
+                "deeplake<4,>=3.6.5",
                 "google-api-core<3,>=2.11.1",
                 "google-api-python-client<3,>=2.88",
                 "google-auth-httplib2<1,>=0.1",
