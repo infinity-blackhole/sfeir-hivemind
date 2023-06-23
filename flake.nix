@@ -55,8 +55,10 @@
               pre-commit.hooks = {
                 black.enable = true;
                 isort.enable = true;
+                terraform-fmt.enable = true;
               };
               packages = [
+                pkgs.terraform
                 pkgs.hatch
                 pkgs.cudaPackages.cudatoolkit
                 pkgs.cudaPackages.cudnn
