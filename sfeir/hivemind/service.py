@@ -4,12 +4,12 @@ from typing import Any
 import bentoml
 from bentoml.io import JSON
 
-from sfeir.hivemind.io import (
+from sfeir.hivemind.runner import VertexAIRunnable
+from sfeir.hivemind.schema import (
     QuestionAnsweringRequest,
     QuestionAnsweringResponse,
     SourceDocument,
 )
-from sfeir.hivemind.runner import VertexAIRunnable
 
 vertexai_runner = bentoml.Runner(
     VertexAIRunnable,
