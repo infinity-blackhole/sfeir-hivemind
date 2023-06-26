@@ -1,5 +1,4 @@
 import os
-from typing import Any
 
 import bentoml
 from bentoml.io import JSON
@@ -38,6 +37,8 @@ async def predict(qa: QuestionAnsweringRequest) -> QuestionAnsweringResponse:
     result = await vertexai_runner.predict.async_run(
         {"question": qa.question, "chat_history": chat_message_history.messages}
     )
+    chat_message_history.add_user_message(qa.question)
+    chat_message_history.add_ai_message(result["answer"])
     return QuestionAnsweringResponse(
         question=result["question"],
         answer=result["answer"],
