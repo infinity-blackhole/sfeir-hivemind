@@ -3,6 +3,7 @@ from typing import Any
 
 import bentoml
 from bentoml.io import JSON
+from langchain.memory.chat_message_histories import FirestoreChatMessageHistory
 
 from sfeir.hivemind.runner import VertexAIRunnable
 from sfeir.hivemind.schema import (
@@ -28,8 +29,15 @@ svc = bentoml.Service("sfeir-hivemind", runners=[vertexai_runner])
     input=JSON(pydantic_model=QuestionAnsweringRequest),
     output=JSON(pydantic_model=QuestionAnsweringResponse),
 )
-async def predict(question: QuestionAnsweringRequest) -> QuestionAnsweringResponse:
-    result = await vertexai_runner.predict.async_run(question.dict())
+async def predict(qa: QuestionAnsweringRequest) -> QuestionAnsweringResponse:
+    chat_message_history = FirestoreChatMessageHistory(
+        collection_name="chat_history",
+        session_id=qa.session_id,
+        user_id=qa.user_id,
+    )
+    result = await vertexai_runner.predict.async_run(
+        {"question": qa.question, "chat_history": chat_message_history.messages}
+    )
     return QuestionAnsweringResponse(
         question=result["question"],
         answer=result["answer"],

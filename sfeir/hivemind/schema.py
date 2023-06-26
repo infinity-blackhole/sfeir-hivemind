@@ -3,7 +3,8 @@ from pydantic import BaseModel
 
 class QuestionAnsweringRequest(BaseModel):
     question: str
-    chat_history: list[str] = []
+    session_id: str
+    user_id: str
 
 
 class SourceDocument(BaseModel):
