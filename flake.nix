@@ -55,7 +55,7 @@
               pre-commit.hooks = {
                 black.enable = true;
                 isort.enable = true;
-                terraform-fmt.enable = true;
+                terraform-format.enable = true;
               };
               packages = [
                 pkgs.terraform
