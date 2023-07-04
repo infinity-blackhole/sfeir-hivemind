@@ -13,19 +13,15 @@ from sfeir.hivemind.schema import (
     SourceDocument,
 )
 from sfeir.langchain.embeddings.bentoml import BentoMLEmbeddings
+from sfeir.langchain.llms.bentoml import BentoML
 
-embeddings = BentoMLEmbeddings(model_tag="sentence-transformers")
+llm = BentoML(model_tag="sfeir_hivemind_llm")
+embeddings = BentoMLEmbeddings(model_tag="sfeir_hivemind_embeddings")
 
 vectorstore = DeepLake(
     dataset_path=os.environ["DEEP_LAKE_DATASET_URI"],
     embedding_function=embeddings,
     read_only=True,
-)
-
-llm = OpenLLM(
-    model_name="stablelm",
-    model_id="stabilityai/stablelm-tuned-alpha-3b",
-    embedded=False,
 )
 
 chain = ConversationalRetrievalChain.from_llm(
@@ -34,7 +30,7 @@ chain = ConversationalRetrievalChain.from_llm(
     return_source_documents=True,
 )
 
-svc = bentoml.Service("sfeir-hivemind", runners=[llm.runner, embeddings.runner])
+svc = bentoml.Service("sfeir_hivemind", runners=[llm.runner, embeddings.runner])
 
 
 @svc.api(
@@ -47,9 +43,11 @@ async def predict(qa: QuestionAnsweringRequest) -> QuestionAnsweringResponse:
         session_id=qa.session_id,
         user_id=qa.user_id,
     )
+    print("yo1")
     result = chain(
         {"question": qa.question, "chat_history": chat_message_history.messages}
     )
+    print("yo2")
     chat_message_history.add_user_message(qa.question)
     chat_message_history.add_ai_message(result["answer"])
     return QuestionAnsweringResponse(
