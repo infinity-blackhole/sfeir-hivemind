@@ -11,12 +11,11 @@ class VertexAIRunnable(bentoml.Runnable):
     SUPPORTED_RESOURCES = ("cpu", "nvidia.com/gpu")
     SUPPORTS_CPU_MULTI_THREADING = True
 
-    def __init__(self, project: str, location: str, dataset_uri: str):
+    def __init__(self, project: str, location: str, dataset_uri: str, embeddings):
         self.llm = VertexAI(project=project, location=location)
-        self.embeddings = HuggingFaceEmbeddings()
         self.vectorstore = DeepLake(
             dataset_path=dataset_uri,
-            embedding_function=self.embeddings,
+            embedding_function=embeddings,
             read_only=True,
         )
         self.chain = ConversationalRetrievalChain.from_llm(

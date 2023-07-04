@@ -4,12 +4,14 @@ import logging
 import bentoml
 import docker
 
+from sfeir.hivemind import service
+
 _logger = logging.getLogger(__name__)
 
 
 def run(opts: argparse.Namespace):
     bento = bentoml.bentos.build(
-        service="sfeir.hivemind.service:svc",
+        service=f"{service.__name__}:svc",
         include=["sfeir/hivemind/*.py"],
         docker={
             "python_version": "3.10",
