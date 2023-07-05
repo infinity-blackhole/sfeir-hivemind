@@ -3,7 +3,6 @@ import os
 import bentoml
 from bentoml.io import JSON
 from langchain.chains import ConversationalRetrievalChain
-from langchain.llms import OpenLLM
 from langchain.memory.chat_message_histories import FirestoreChatMessageHistory
 from langchain.vectorstores import DeepLake
 
@@ -43,11 +42,9 @@ async def predict(qa: QuestionAnsweringRequest) -> QuestionAnsweringResponse:
         session_id=qa.session_id,
         user_id=qa.user_id,
     )
-    print("yo1")
     result = chain(
         {"question": qa.question, "chat_history": chat_message_history.messages}
     )
-    print("yo2")
     chat_message_history.add_user_message(qa.question)
     chat_message_history.add_ai_message(result["answer"])
     return QuestionAnsweringResponse(

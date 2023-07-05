@@ -48,7 +48,7 @@ class BentoML(LLM):
     llm_kwargs: Dict[str, Any]
     """Key word arguments to be passed to bentoml.LLM"""
 
-    _runner: bentoml.Runner = PrivateAttr(default=None)
+    _runner: bentoml.Runner = PrivateAttr()
 
     class Config:
         extra = Extra.forbid
@@ -115,7 +115,7 @@ class BentoML(LLM):
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> str:
-        return self._runner.generate.run(prompt, **kwargs)
+        return self._runner.run(prompt, **kwargs)
 
     async def _acall(
         self,
@@ -124,4 +124,4 @@ class BentoML(LLM):
         run_manager: Optional[AsyncCallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> str:
-        return await self._runner.generate.async_run(prompt, **kwargs)
+        return await self._runner.async_run(prompt, **kwargs)

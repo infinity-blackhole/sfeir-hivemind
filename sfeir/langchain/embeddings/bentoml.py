@@ -15,10 +15,10 @@ class BentoMLEmbeddings(BaseModel, Embeddings):
 
             from langchain.embeddings import BentoMLEmbeddings
 
-            model_name = "sentence-transformers"
+            model_tag = "sentence-transformers"
             encode_kwargs = {'normalize_embeddings': False}
             hf = BentoMLEmbeddings(
-                model_name=model_name,
+                model_tag=model_tag,
                 encode_kwargs=encode_kwargs
             )
     """
@@ -54,7 +54,7 @@ class BentoMLEmbeddings(BaseModel, Embeddings):
             svc = bentoml.Service("langchain-bentoml", runners=[embeddings.runner])
         """
         if self.client is None:
-            raise ValueError("BentoML must be initialized locally with 'model_name'")
+            raise ValueError("BentoML must be initialized locally with 'model_tag'")
         return self.client
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:

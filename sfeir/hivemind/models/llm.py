@@ -3,8 +3,8 @@ import torch
 import transformers
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-tokenizer = AutoTokenizer.from_pretrained("tiiuae/falcon-7b")
-model = AutoModelForCausalLM.from_pretrained("tiiuae/falcon-7b")
+tokenizer = AutoTokenizer.from_pretrained("tiiuae/falcon-7b", trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained("tiiuae/falcon-7b", trust_remote_code=True)
 pipeline = transformers.pipeline(
     "text-generation",
     model=model,

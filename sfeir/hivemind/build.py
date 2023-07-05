@@ -19,6 +19,7 @@ def run(opts: argparse.Namespace):
         python={
             "packages": [
                 "deeplake<4,>=3.6.5",
+                "einops<1,>=0.6.1",
                 "firebase-admin<7,>=6.2.0",
                 "google-api-core<3,>=2.11.1",
                 "google-api-python-client<3,>=2.88",
@@ -32,7 +33,9 @@ def run(opts: argparse.Namespace):
                 "pydantic<2,>=1.10.9",
                 "pypdf2<4,>=3.0",
                 "sentence-transformers<3,>=2.2",
+                "torch<3,>=2.0.1",
                 "transformers<5,>=4.29",
+                "xformers<1,>=0.0.20",
             ]
         },
     )
