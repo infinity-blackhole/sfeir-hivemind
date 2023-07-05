@@ -17,6 +17,7 @@
   "mounts": [
     "source=nix,target=/nix,type=volume"
   ],
+  "runArgs": ["--gpus=all"],
   "customizations": {
     "vscode": {
       "extensions": [
