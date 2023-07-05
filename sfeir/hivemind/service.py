@@ -15,8 +15,8 @@ from sfeir.hivemind.schema import (
 from sfeir.langchain.embeddings.bentoml import BentoMLEmbeddings
 from sfeir.langchain.llms.bentoml import BentoML
 
-llm = BentoML(model_tag="sfeir_hivemind_llm")
-embeddings = BentoMLEmbeddings(model_tag="sfeir_hivemind_embeddings")
+llm = BentoML(model_tag="sfeir-hivemind-falcon-7b")
+embeddings = BentoMLEmbeddings(model_tag="sfeir-hivemind-all-mpnet-base-v2")
 
 vectorstore = DeepLake(
     dataset_path=os.environ["DEEP_LAKE_DATASET_URI"],
