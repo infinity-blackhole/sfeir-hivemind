@@ -1,9 +1,12 @@
 import importlib
+import logging
 
 import bentoml
 import torch
 import transformers
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+logger = logging.getLogger(__name__)
 
 tokenizer = AutoTokenizer.from_pretrained("tiiuae/falcon-7b", trust_remote_code=True)
 
@@ -22,10 +25,21 @@ pipeline = transformers.pipeline(
     "text-generation",
     model=model,
     tokenizer=tokenizer,
+    trust_remote_code=True,
 )
 
-bentoml.transformers.save_model(
-    "sfeir-hivemind-falcon-7b",
-    pipeline=pipeline,
-    external_modules=[importlib.import_module(pipeline.__module__)],
-)
+
+def run():
+    bentoml.transformers.save_model(
+        "sfeir-hivemind-falcon-7b",
+        pipeline=pipeline,
+        external_modules=[
+            importlib.import_module(tokenizer.__module__),
+            importlib.import_module(model.__module__),
+        ],
+    )
+
+
+if __name__ == "__main__":
+    logging.basicConfig()
+    run()
