@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - env: []
-          image: europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
+          image: europe-west1-docker.pkg.dev/shikanime-studio/sfeir-hivemind/sfeir-hivemind
           name: bento
           ports:
             - containerPort: 3000

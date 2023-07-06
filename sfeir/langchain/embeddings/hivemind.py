@@ -1,12 +1,12 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
-import bentoml
+from bentoml.client import Client, GrpcClient, HTTPClient
 from langchain.embeddings.base import Embeddings
-from pydantic import BaseModel, Extra, Field
+from pydantic import BaseModel, Extra, Field, PrivateAttr
 
 
-class BentoMLEmbeddings(BaseModel, Embeddings):
-    """Wrapper around BentoML runner.
+class HivemindEmbeddings(BaseModel, Embeddings):
+    """Wrapper around BentoML client.
 
     To use, you should have the ``bentoml`` python package installed.
 
@@ -23,9 +23,9 @@ class BentoMLEmbeddings(BaseModel, Embeddings):
             )
     """
 
-    client: Any  #: :meta private:
+    client: Union[GrpcClient, HTTPClient] = PrivateAttr()
 
-    model_tag: str
+    server_url: str
     """Key word arguments to pass to the model."""
     encode_kwargs: Dict[str, Any] = Field(default_factory=dict)
     """Key word arguments to pass when calling the `encode` method of the model."""
@@ -33,29 +33,12 @@ class BentoMLEmbeddings(BaseModel, Embeddings):
     def __init__(self, **kwargs: Any):
         """Initialize the sentence_transformer."""
         super().__init__(**kwargs)
-        self.client = bentoml.pytorch.get(self.model_tag).to_runner()
+        self.client = Client.from_url(self.server_url)
 
     class Config:
         """Configuration for this pydantic object."""
 
         extra = Extra.forbid
-
-    @property
-    def runner(self) -> bentoml.Runner:
-        """
-        Get the underlying bentoml.Runner instance for integration with BentoML.
-
-        Example:
-        .. code-block:: python
-
-            embeddings = bentoml(
-                model_tag='sentence-transformers',
-            )
-            svc = bentoml.Service("langchain-bentoml", runners=[embeddings.runner])
-        """
-        if self.client is None:
-            raise ValueError("BentoML must be initialized locally with 'model_tag'")
-        return self.client
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         """Compute doc embeddings using a BentoML model.
@@ -67,7 +50,7 @@ class BentoMLEmbeddings(BaseModel, Embeddings):
             List of embeddings, one for each text.
         """
         texts = list(map(lambda x: x.replace("\n", " "), texts))
-        embeddings = self.client.encode.run(texts, **self.encode_kwargs)
+        embeddings = self.client.call("encode", texts, **self.encode_kwargs)
         return embeddings.tolist()
 
     def embed_query(self, text: str) -> List[float]:
@@ -80,5 +63,5 @@ class BentoMLEmbeddings(BaseModel, Embeddings):
             Embeddings for the text.
         """
         text = text.replace("\n", " ")
-        embedding = self.client.encode.run(text, **self.encode_kwargs)
+        embedding = self.client.call("encode", text, **self.encode_kwargs)
         return embedding.tolist()

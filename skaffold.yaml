@@ -4,7 +4,7 @@ metadata:
   name: sfeir-hivemind
 build:
   artifacts:
-    - image: europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind-containers/sfeir-hivemind
+    - image: europe-west1-docker.pkg.dev/shikanime-studio/sfeir-hivemind/sfeir-hivemind
       custom:
         buildCommand: |
           if [ -z "$PUSH_IMAGE" ]; then
@@ -15,6 +15,30 @@ build:
         dependencies:
           paths:
             - sfeir/hivemind
+            - pyproject.toml
+    - image: europe-west1-docker.pkg.dev/shikanime-studio/sfeir-hivemind/sfeir-hivemind-tiiuae-falcon-7b
+      custom:
+        buildCommand: |
+          if [ -z "$PUSH_IMAGE" ]; then
+            python -m sfeir.hivemind.llm.build -t $IMAGE
+          else
+            python -m sfeir.hivemind.llm.build -t $IMAGE --push
+          fi
+        dependencies:
+          paths:
+            - sfeir/hivemind/llm
+            - pyproject.toml
+    - image: europe-west1-docker.pkg.dev/shikanime-studio/sfeir-hivemind/sfeir-hivemind-sentence-transfomers-all-mpnet-base-v2
+      custom:
+        buildCommand: |
+          if [ -z "$PUSH_IMAGE" ]; then
+            python -m sfeir.hivemind.embeddings.build -t $IMAGE
+          else
+            python -m sfeir.hivemind.embeddings.build -t $IMAGE --push
+          fi
+        dependencies:
+          paths:
+            - sfeir/hivemind/embeddings
             - pyproject.toml
   local:
     useBuildkit: true

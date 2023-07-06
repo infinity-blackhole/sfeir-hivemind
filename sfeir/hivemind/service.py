@@ -2,6 +2,7 @@ import os
 
 import bentoml
 from bentoml.io import JSON
+from langchain.llms.openllm import OpenLLM
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory.chat_message_histories import FirestoreChatMessageHistory
 from langchain.vectorstores import DeepLake
@@ -11,11 +12,12 @@ from sfeir.hivemind.schema import (
     QuestionAnsweringResponse,
     SourceDocument,
 )
-from sfeir.langchain.embeddings.bentoml import BentoMLEmbeddings
-from sfeir.langchain.llms.bentoml import BentoML
+from sfeir.langchain.embeddings.hivemind import HivemindEmbeddings
 
-llm = BentoML(model_tag="sfeir-hivemind-falcon-7b")
-embeddings = BentoMLEmbeddings(model_tag="sfeir-hivemind-all-mpnet-base-v2")
+llm = OpenLLM(server_url=os.environ.get("OPENLLM_SERVER_URL", "http://localhost:3000"))
+embeddings = HivemindEmbeddings(
+    server_url=os.environ.get("EMBEDDINGS_SERVER_URL", "http://localhost:3001")
+)
 
 vectorstore = DeepLake(
     dataset_path=os.environ["DEEP_LAKE_DATASET_URI"],
@@ -29,7 +31,7 @@ chain = ConversationalRetrievalChain.from_llm(
     return_source_documents=True,
 )
 
-svc = bentoml.Service("sfeir_hivemind", runners=[llm.runner, embeddings.runner])
+svc = bentoml.Service("sfeir_hivemind", runners=[])
 
 
 @svc.api(
