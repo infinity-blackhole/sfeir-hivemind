@@ -1,3 +1,5 @@
+import importlib
+
 import bentoml
 import torch
 import transformers
@@ -22,4 +24,8 @@ pipeline = transformers.pipeline(
     tokenizer=tokenizer,
 )
 
-bentoml.transformers.save_model("sfeir-hivemind-falcon-7b", pipeline=pipeline)
+bentoml.transformers.save_model(
+    "sfeir-hivemind-falcon-7b",
+    pipeline=pipeline,
+    external_modules=[importlib.import_module(pipeline.__module__)],
+)
