@@ -5,7 +5,7 @@ from langchain.embeddings.base import Embeddings
 from pydantic import BaseModel, Extra, Field
 
 
-class BentoMLEmbeddings(BaseModel, Embeddings):
+class HivemindEmbeddings(BaseModel, Embeddings):
     """Wrapper around BentoML runner.
 
     To use, you should have the ``bentoml`` python package installed.
@@ -13,11 +13,11 @@ class BentoMLEmbeddings(BaseModel, Embeddings):
     Example:
         .. code-block:: python
 
-            from langchain.embeddings import BentoMLEmbeddings
+            from langchain.embeddings import HivemindEmbeddings
 
             model_tag = "sentence-transformers"
             encode_kwargs = {'normalize_embeddings': False}
-            hf = BentoMLEmbeddings(
+            hf = HivemindEmbeddings(
                 model_tag=model_tag,
                 encode_kwargs=encode_kwargs
             )
@@ -25,7 +25,7 @@ class BentoMLEmbeddings(BaseModel, Embeddings):
 
     client: Any  #: :meta private:
 
-    model_tag: str
+    model_name: str
     """Key word arguments to pass to the model."""
     encode_kwargs: Dict[str, Any] = Field(default_factory=dict)
     """Key word arguments to pass when calling the `encode` method of the model."""
@@ -33,7 +33,7 @@ class BentoMLEmbeddings(BaseModel, Embeddings):
     def __init__(self, **kwargs: Any):
         """Initialize the sentence_transformer."""
         super().__init__(**kwargs)
-        self.client = bentoml.pytorch.get(self.model_tag).to_runner()
+        self.client = bentoml.pytorch.get(self.model_name).to_runner()
 
     class Config:
         """Configuration for this pydantic object."""
