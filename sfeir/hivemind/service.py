@@ -34,11 +34,12 @@ async def predict(qa: QuestionAnsweringRequest) -> QuestionAnsweringResponse:
         embedding_function=embeddings,
         read_only=True,
     )
+    llm = VertexAI(
+        project=os.environ["VERTEX_AI_PROJECT"],
+        location=os.environ["VERTEX_AI_LOCATION"],
+    )
     chain = ConversationalRetrievalChain.from_llm(
-        VertexAI(
-            project=os.environ["VERTEX_AI_PROJECT"],
-            location=os.environ["VERTEX_AI_LOCATION"],
-        ),
+        llm,
         vectorstore.as_retriever(),
         return_source_documents=True,
     )
