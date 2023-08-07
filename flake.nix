@@ -62,6 +62,7 @@
                 pkgs.hatch
                 pkgs.cudaPackages.cudatoolkit
                 pkgs.cudaPackages.cudnn
+                pkgs.cudaPackages.tensorrt
                 (pkgs.google-cloud-sdk.withExtraComponents [
                   pkgs.google-cloud-sdk.components.alpha
                   pkgs.google-cloud-sdk.components.beta
