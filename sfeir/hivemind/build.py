@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 def run(opts: argparse.Namespace):
     bento = bentoml.bentos.build(
         service=f"{service.__name__}:svc",
-        include=["sfeir/hivemind/*.py"],
+        include=["sfeir/hivemind/**/*.py", "sfeir/langchain/**/*.py"],
         docker={
             "python_version": "3.10",
         },
