@@ -37,7 +37,7 @@ chain = ConversationalRetrievalChain.from_llm(
     input=JSON(pydantic_model=QuestionAnsweringRequest),
     output=JSON(pydantic_model=QuestionAnsweringResponse),
 )
-async def predict(qa: QuestionAnsweringRequest) -> QuestionAnsweringResponse:
+def predict(qa: QuestionAnsweringRequest) -> QuestionAnsweringResponse:
     chat_message_history = FirestoreChatMessageHistory(
         collection_name="chat_history",
         session_id=qa.session_id,
