@@ -4,7 +4,7 @@ metadata:
   name: sfeir-hivemind
 build:
   artifacts:
-    - image: europe-docker.pkg.dev/shikanime-studio/sfeir-hivemind/sfeir-hivemind
+    - image: europe-west1-docker.pkg.dev/shikanime-studio/sfeir-hivemind/sfeir-hivemind
       custom:
         buildCommand: |
           if [ -z "$PUSH_IMAGE" ]; then
