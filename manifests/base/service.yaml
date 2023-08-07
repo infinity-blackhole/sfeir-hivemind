@@ -30,16 +30,11 @@ spec:
               port: 3000
             initialDelaySeconds: 60
           volumeMounts:
-            - mountPath: /home/bentoml/bentoml
-              name: bentoml
             - mountPath: /home/bentoml/.cache/torch
               name: torch-cache
+      serviceAccountName: sfeir-hivemind@shikanime-studio.iam.gserviceaccount.com
       timeoutSeconds: 600
       volumes:
-        - name: bentoml
-          emptyDir:
-            medium: Memory
-            sizeLimit: 1Gi
         - name: torch-cache
           emptyDir:
             medium: Memory
