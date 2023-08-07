@@ -19,13 +19,3 @@ build:
             - pyproject.toml
   local:
     useBuildkit: true
-profiles:
-  - name: shikanime-studio
-    manifests:
-      kustomize:
-        paths:
-          - manifests/overlays/default
-    deploy:
-      cloudrun:
-        projectid: shikanime-studio
-        region: europe-west1
