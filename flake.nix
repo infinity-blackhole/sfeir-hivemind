@@ -59,6 +59,7 @@
               };
               packages = [
                 pkgs.terraform
+                pkgs.kustomize
                 pkgs.hatch
                 pkgs.cudaPackages.cudatoolkit
                 pkgs.cudaPackages.cudnn
