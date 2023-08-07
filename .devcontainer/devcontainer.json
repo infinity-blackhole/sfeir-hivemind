@@ -17,6 +17,9 @@
   "mounts": [
     "source=nix,target=/nix,type=volume"
   ],
+  "hostRequirements": {
+    "gpu": "optional"
+  },
   "customizations": {
     "vscode": {
       "extensions": [

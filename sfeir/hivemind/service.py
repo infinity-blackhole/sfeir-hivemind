@@ -2,26 +2,21 @@ import os
 
 import bentoml
 from bentoml.io import JSON
+from langchain.chains import ConversationalRetrievalChain
+from langchain.llms.vertexai import VertexAI
 from langchain.memory.chat_message_histories import FirestoreChatMessageHistory
+from langchain.vectorstores import DeepLake
 
-from sfeir.hivemind.runner import VertexAIRunnable
 from sfeir.hivemind.schema import (
     QuestionAnsweringRequest,
     QuestionAnsweringResponse,
     SourceDocument,
 )
+from sfeir.langchain.embeddings.hivemind import HivemindEmbeddings
 
-vertexai_runner = bentoml.Runner(
-    VertexAIRunnable,
-    name="sfeir-hivemind",
-    runnable_init_params={
-        "project": os.environ.get("VERTEX_AI_PROJECT"),
-        "location": os.environ.get("VERTEX_AI_LOCATION"),
-        "dataset_uri": os.environ["DEEP_LAKE_DATASET_URI"],
-    },
-)
+embeddings = HivemindEmbeddings(model_name="pt-sentence-transformers-all-mpnet-base-v2")
 
-svc = bentoml.Service("sfeir-hivemind", runners=[vertexai_runner])
+svc = bentoml.Service("sfeir_hivemind", runners=[embeddings.runner])
 
 
 @svc.api(
@@ -34,7 +29,20 @@ async def predict(qa: QuestionAnsweringRequest) -> QuestionAnsweringResponse:
         session_id=qa.session_id,
         user_id=qa.user_id,
     )
-    result = await vertexai_runner.predict.async_run(
+    vectorstore = DeepLake(
+        dataset_path=os.environ["DEEP_LAKE_DATASET_URI"],
+        embedding_function=embeddings,
+        read_only=True,
+    )
+    chain = ConversationalRetrievalChain.from_llm(
+        VertexAI(
+            project=os.environ["VERTEX_AI_PROJECT"],
+            location=os.environ["VERTEX_AI_LOCATION"],
+        ),
+        vectorstore.as_retriever(),
+        return_source_documents=True,
+    )
+    result = chain(
         {"question": qa.question, "chat_history": chat_message_history.messages}
     )
     chat_message_history.add_user_message(qa.question)
