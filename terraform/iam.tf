@@ -5,7 +5,8 @@ module "service_account" {
   display_name = "${var.display_name} service account"
   iam_project_roles = {
     "${var.project_id}" = [
-      "roles/aiplatform.user"
+      "roles/aiplatform.user",
+      "roles/datastore.user"
     ]
   }
 }
