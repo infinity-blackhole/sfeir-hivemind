@@ -18,8 +18,6 @@ def run(opts: argparse.Namespace):
         },
         python={
             "packages": [
-                "accelerate<1,>=0.20.3",
-                "bitsandbytes<3,>=0.39.1",
                 "deeplake<4,>=3.6.5",
                 "einops<1,>=0.6.1",
                 "firebase-admin<7,>=6.2.0",

@@ -54,22 +54,11 @@ resource "google_cloud_run_v2_service" "default" {
         initial_delay_seconds = 60
       }
       volume_mounts {
-        name       = "bentoml"
-        mount_path = "/home/bentoml/bentoml"
-      }
-      volume_mounts {
         name       = "torch-cache"
         mount_path = "/home/bentoml/.cache/torch"
       }
     }
 
-    volumes {
-      name = "bentoml"
-      empty_dir {
-        medium     = "MEMORY"
-        size_limit = "1Gi"
-      }
-    }
     volumes {
       name = "torch-cache"
       empty_dir {

@@ -23,8 +23,6 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "accelerate<1,>=0.20.3",
-  "bitsandbytes<3,>=0.39.1",
   "bentoml<2,>=1.0",
   "docker<7,>=6.1.3",
   "deeplake<4,>=3.6.5",
