@@ -15,6 +15,7 @@ build:
         dependencies:
           paths:
             - sfeir/hivemind
+            - sfeir/langchain
             - pyproject.toml
   local:
     useBuildkit: true
