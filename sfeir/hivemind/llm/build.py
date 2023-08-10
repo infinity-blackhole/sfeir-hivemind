@@ -8,7 +8,7 @@ def run(opts: argparse.Namespace):
     openllm.build(
         "llama",
         model_id=opts.model_id,
-        quantize="gptq",
+        quantize="int8",
     )
 
 

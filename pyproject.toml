@@ -48,7 +48,6 @@ dependencies = [
 dynamic = ["version"]
 
 [project.optional-dependencies]
-quantization = ["auto-gptq<1,>=0.3.1"]
 jupyter = ["IProgress", "ipywidgets", "ipykernel"]
 
 [project.urls]

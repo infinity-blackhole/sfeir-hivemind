@@ -2,40 +2,20 @@ apiVersion: skaffold/v4beta5
 kind: Config
 metadata:
   name: sfeir-hivemind
-profiles:
-  - name: google-shikanime-studio
-    build:
-      artifacts:
-        - image: europe-west1-docker.pkg.dev/shikanime-studio/sfeir-hivemind/sfeir-hivemind
-          custom:
-            buildCommand: |
-              if [ -z "$PUSH_IMAGE" ]; then
-                python -m sfeir.hivemind.build -t $IMAGE
-              else
-                python -m sfeir.hivemind.build -t $IMAGE --push
-              fi
-            dependencies:
-              paths:
-                - sfeir/hivemind
-                - sfeir/langchain
-                - pyproject.toml
-      local:
-        useBuildkit: true
-  - name: github-infinity-blackhole
-    build:
-      artifacts:
-        - image: ghcr.io/infinity-blackhole/sfeir-hivemind
-          custom:
-            buildCommand: |
-              if [ -z "$PUSH_IMAGE" ]; then
-                python -m sfeir.hivemind.build -t $IMAGE
-              else
-                python -m sfeir.hivemind.build -t $IMAGE --push
-              fi
-            dependencies:
-              paths:
-                - sfeir/hivemind
-                - sfeir/langchain
-                - pyproject.toml
-      local:
-        useBuildkit: true
+build:
+  artifacts:
+    - image: ghcr.io/infinity-blackhole/sfeir-hivemind
+      custom:
+        buildCommand: |
+          if [ -z "$PUSH_IMAGE" ]; then
+            python -m sfeir.hivemind.build -t $IMAGE
+          else
+            python -m sfeir.hivemind.build -t $IMAGE --push
+          fi
+        dependencies:
+          paths:
+            - sfeir/hivemind
+            - sfeir/langchain
+            - pyproject.toml
+  local:
+    useBuildkit: true

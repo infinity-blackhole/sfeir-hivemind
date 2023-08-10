@@ -39,16 +39,12 @@
                 nixpkgs-fmt.enable = true;
                 statix.enable = true;
                 deadnix.enable = true;
-                hadolint.enable = true;
               };
               packages = [
                 pkgs.nixpkgs-fmt
-                pkgs.docker
                 pkgs.nodejs
                 pkgs.glab
                 pkgs.gh
-                pkgs.skaffold
-                pkgs.openjdk
               ];
             }
             {
@@ -56,10 +52,12 @@
                 black.enable = true;
                 isort.enable = true;
                 terraform-format.enable = true;
+                hadolint.enable = true;
               };
               packages = [
+                pkgs.docker
                 pkgs.terraform
-                pkgs.kustomize
+                pkgs.skaffold
                 pkgs.hatch
                 pkgs.cudaPackages.cudatoolkit
                 pkgs.cudaPackages.cudnn
@@ -71,6 +69,17 @@
                   pkgs.google-cloud-sdk.components.cloud-run-proxy
                   pkgs.google-cloud-sdk.components.gsutil
                 ])
+              ];
+            }
+          ];
+        };
+        ci = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            {
+              packages = [
+                pkgs.skaffold
+                pkgs.docker
               ];
             }
           ];
