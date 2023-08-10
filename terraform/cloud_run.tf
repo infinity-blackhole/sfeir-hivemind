@@ -34,8 +34,8 @@ resource "google_cloud_run_v2_service" "default" {
       }
       resources {
         limits = {
-          cpu    = "1000m"
-          memory = "4Gi"
+          cpu    = "4000m"
+          memory = "8Gi"
         }
         cpu_idle          = true
         startup_cpu_boost = true
@@ -51,7 +51,7 @@ resource "google_cloud_run_v2_service" "default" {
           path = "/readyz"
           port = 3000
         }
-        initial_delay_seconds = 60
+        initial_delay_seconds = 120
       }
       volume_mounts {
         name       = "torch-cache"
