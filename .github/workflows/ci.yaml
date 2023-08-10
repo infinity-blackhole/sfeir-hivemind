@@ -3,7 +3,7 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - refactor/bento-models-model-extract-limit-testing
+      - main
 
 jobs:
   docker:
