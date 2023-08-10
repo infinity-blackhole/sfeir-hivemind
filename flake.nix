@@ -71,21 +71,6 @@
             }
           ];
         };
-        ci = devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [
-            {
-              env = {
-                OPENLLM_LLAMA_MODEL_ID = "NousResearch/Llama-2-7b-chat-hf";
-                OPENLLM_LLAMA_FRAMEWORK = "pt";
-              };
-              packages = [
-                pkgs.skaffold
-                pkgs.docker
-              ];
-            }
-          ];
-        };
       }
     );
   };
