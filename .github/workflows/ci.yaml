@@ -18,4 +18,7 @@ jobs:
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
       - run: pip install -e .
+      - run: |
+          python -m sfeir.hivemind.embeddings.build
+          python -m sfeir.hivemind.llm.build
       - run: nix develop .#ci --impure -c skaffold build
