@@ -19,6 +19,3 @@ jobs:
           password: ${{secrets.GITHUB_TOKEN}}
       - run: pip install -e .
       - run: nix develop .#ci --impure -c skaffold build
-        env:
-          OPENLLM_LLAMA_MODEL_ID: NousResearch/Llama-2-7b-chat-hf
-          OPENLLM_LLAMA_FRAMEWORK: pt

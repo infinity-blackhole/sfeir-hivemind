@@ -54,6 +54,10 @@
                 terraform-format.enable = true;
                 hadolint.enable = true;
               };
+              env = {
+                OPENLLM_LLAMA_MODEL_ID = "NousResearch/Llama-2-7b-chat-hf";
+                OPENLLM_LLAMA_FRAMEWORK = "pt";
+              };
               packages = [
                 pkgs.docker
                 pkgs.terraform
@@ -77,6 +81,10 @@
           inherit inputs pkgs;
           modules = [
             {
+              env = {
+                OPENLLM_LLAMA_MODEL_ID = "NousResearch/Llama-2-7b-chat-hf";
+                OPENLLM_LLAMA_FRAMEWORK = "pt";
+              };
               packages = [
                 pkgs.skaffold
                 pkgs.docker
