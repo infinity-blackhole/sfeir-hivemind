@@ -39,16 +39,6 @@
                 nixpkgs-fmt.enable = true;
                 statix.enable = true;
                 deadnix.enable = true;
-              };
-              packages = [
-                pkgs.nixpkgs-fmt
-                pkgs.nodejs
-                pkgs.glab
-                pkgs.gh
-              ];
-            }
-            {
-              pre-commit.hooks = {
                 black.enable = true;
                 isort.enable = true;
                 terraform-format.enable = true;
@@ -59,6 +49,10 @@
                 OPENLLM_LLAMA_FRAMEWORK = "pt";
               };
               packages = [
+                pkgs.nixpkgs-fmt
+                pkgs.nodejs
+                pkgs.glab
+                pkgs.gh
                 pkgs.docker
                 pkgs.terraform
                 pkgs.skaffold
