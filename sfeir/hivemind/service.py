@@ -3,7 +3,7 @@ import os
 import bentoml
 from bentoml.io import JSON
 from langchain.chains import ConversationalRetrievalChain
-from langchain.llms.vertexai import VertexAI
+from langchain.llms import OpenLLM
 from langchain.memory.chat_message_histories import FirestoreChatMessageHistory
 from langchain.vectorstores import DeepLake
 
@@ -14,23 +14,25 @@ from sfeir.hivemind.schema import (
 )
 from sfeir.langchain.embeddings.hivemind import HivemindEmbeddings
 
+llm = OpenLLM(
+    model_name="llama",
+    model_id=os.environ["OPENLLM_LLAMA_MODEL_ID"],
+    embedded=False,
+    quantize="int4",
+)
 embeddings = HivemindEmbeddings(model_name="pt-sentence-transformers-all-mpnet-base-v2")
-svc = bentoml.Service("sfeir_hivemind", runners=[embeddings.runner])
-
 vectorstore = DeepLake(
     dataset_path=os.environ["DEEP_LAKE_DATASET_URI"],
     embedding_function=embeddings,
     read_only=True,
-)
-llm = VertexAI(
-    project=os.environ["VERTEX_AI_PROJECT"],
-    location=os.environ["VERTEX_AI_LOCATION"],
 )
 chain = ConversationalRetrievalChain.from_llm(
     llm,
     vectorstore.as_retriever(),
     return_source_documents=True,
 )
+
+svc = bentoml.Service("sfeir_hivemind", runners=[llm.runner, embeddings.runner])
 
 
 @svc.api(

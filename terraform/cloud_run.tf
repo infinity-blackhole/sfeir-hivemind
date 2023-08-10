@@ -29,13 +29,21 @@ resource "google_cloud_run_v2_service" "default" {
         name  = "VERTEX_AI_LOCATION"
         value = var.vertex_ai_location
       }
+      env {
+        name  = "OPENLLM_LLAMA_FRAMEWORK"
+        value = "pt"
+      }
+      env {
+        name  = "OPENLLM_LLAMA_MODEL_ID"
+        value = "NousResearch/Llama-2-7b-chat-hf"
+      }
       ports {
         container_port = 3000
       }
       resources {
         limits = {
-          cpu    = "4000m"
-          memory = "8Gi"
+          cpu    = "6000m"
+          memory = "16Gi"
         }
         cpu_idle          = true
         startup_cpu_boost = true

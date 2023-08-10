@@ -19,6 +19,7 @@ def run(opts: argparse.Namespace):
         python={
             "packages": [
                 "deeplake<4,>=3.6.5",
+                "einops<1,>=0.6.1",
                 "firebase-admin<7,>=6.2.0",
                 "google-api-core<3,>=2.11.1",
                 "google-api-python-client<3,>=2.88",
@@ -27,6 +28,7 @@ def run(opts: argparse.Namespace):
                 "google-cloud-aiplatform<2.0,>=1.25.0",
                 "google-cloud-core<3,>=2.3.2",
                 "langchain[llms]<0.1,>=0.0.190",
+                "openllm[llama]<0.3,>=0.2.13",
                 "pillow<10,>=9.5",
                 "protobuf<4,>=3.20.3",
                 "pydantic<2,>=1.10.9",
@@ -34,6 +36,7 @@ def run(opts: argparse.Namespace):
                 "sentence-transformers<3,>=2.2",
                 "torch<3,>=2.0.1",
                 "transformers<5,>=4.29",
+                "xformers<1,>=0.0.20",
             ]
         },
     )
