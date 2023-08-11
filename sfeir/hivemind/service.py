@@ -35,6 +35,7 @@ chain = ConversationalRetrievalChain.from_llm(
     vectorstore.as_retriever(),
     return_source_documents=True,
 )
+svc = bentoml.Service("sfeir_hivemind", runners=[embeddings.runner])
 
 svc = bentoml.Service("sfeir_hivemind", runners=[llm.runner, embeddings.runner])
 
