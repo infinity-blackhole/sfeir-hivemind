@@ -4,7 +4,7 @@ metadata:
   name: sfeir-hivemind
 build:
   artifacts:
-    - image: ghcr.io/infinity-blackhole/sfeir-hivemind
+    - image: sfeir-hivemind
       custom:
         buildCommand: |
           if [ -z "$PUSH_IMAGE" ]; then
