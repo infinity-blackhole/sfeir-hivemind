@@ -8,7 +8,7 @@ resource "google_cloud_run_v2_service" "default" {
   launch_stage = "BETA"
 
   template {
-    timeout               = "600s"
+    timeout               = "1200s"
     service_account       = module.service_account.email
     execution_environment = "EXECUTION_ENVIRONMENT_GEN2"
     scaling {
