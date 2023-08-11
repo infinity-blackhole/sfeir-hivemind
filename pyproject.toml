@@ -23,7 +23,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "bentoml<2,>=1.0",
+  "bentoml[io-json]<2,>=1.0",
   "deeplake<4,>=3.6.5",
   "einops<1,>=0.6.1",
   "firebase-admin<7,>=6.2.0",

@@ -46,7 +46,7 @@ def run(opts: argparse.Namespace):
         bento.tag,
         backend="buildx",
         image_tag=tuple(opts.tag),
-        features=["grpc", "tracing"],
+        features=["grpc", "io-json", "tracing-otlp"],
         push=opts.push,
         cache_from=opts.cache_from,
     )
