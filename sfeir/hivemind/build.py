@@ -2,7 +2,6 @@ import argparse
 import logging
 
 import bentoml
-import docker
 
 from sfeir.hivemind import service
 
@@ -44,18 +43,15 @@ def run(opts: argparse.Namespace):
     _logger.info(f"Built BentoML service {bento.tag}")
 
     bentoml.container.build(
-        bento.tag, image_tag=tuple(opts.tag), features=["grpc", "tracing"]
+        bento.tag,
+        backend="buildx",
+        image_tag=tuple(opts.tag),
+        features=["grpc", "tracing"],
+        push=opts.push,
+        cache_from=opts.tag,
     )
 
     _logger.info(f"Built Docker image {opts.tag} for BentoML service {bento.tag}")
-
-    if opts.push:
-        docker_client = docker.from_env()
-        for tag in opts.tag:
-            docker_client.images.push(tag)
-            _logger.info(f"Pushed Docker image {opts.tag}")
-    else:
-        _logger.info(f"Skipping Docker image push for {opts.tag}")
 
 
 def parse_opts():
