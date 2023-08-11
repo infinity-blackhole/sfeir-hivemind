@@ -4,13 +4,18 @@ metadata:
   name: sfeir-hivemind
 build:
   artifacts:
-    - image: europe-west1-docker.pkg.dev/shikanime-studio/sfeir-hivemind/sfeir-hivemind
+    - image: sfeir-hivemind
       custom:
         buildCommand: |
           if [ -z "$PUSH_IMAGE" ]; then
-            python -m sfeir.hivemind.build -t $IMAGE
+            python -m sfeir.hivemind.build \
+              --tag $IMAGE \
+              --cache-from ghcr.io/infinity-blackhole/sfeir-hivemind
           else
-            python -m sfeir.hivemind.build -t $IMAGE --push
+            python -m sfeir.hivemind.build \
+              --tag $IMAGE \
+              --cache-from ghcr.io/infinity-blackhole/sfeir-hivemind \
+              --push
           fi
         dependencies:
           paths:
