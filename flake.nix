@@ -39,27 +39,25 @@
                 nixpkgs-fmt.enable = true;
                 statix.enable = true;
                 deadnix.enable = true;
-                hadolint.enable = true;
-              };
-              packages = [
-                pkgs.nixpkgs-fmt
-                pkgs.docker
-                pkgs.nodejs
-                pkgs.glab
-                pkgs.gh
-                pkgs.skaffold
-                pkgs.openjdk
-              ];
-            }
-            {
-              pre-commit.hooks = {
                 black.enable = true;
                 isort.enable = true;
                 terraform-format.enable = true;
+                hadolint.enable = true;
+              };
+              env = {
+                OPENLLM_LLAMA_MODEL_ID = "NousResearch/Llama-2-7b-chat-hf";
+                OPENLLM_LLAMA_FRAMEWORK = "pt";
               };
               packages = [
+                pkgs.nixpkgs-fmt
+                pkgs.stdenv.cc.cc.lib
+                pkgs.python310
+                pkgs.nodejs
+                pkgs.glab
+                pkgs.gh
+                pkgs.docker
                 pkgs.terraform
-                pkgs.kustomize
+                pkgs.skaffold
                 pkgs.hatch
                 pkgs.cudaPackages.cudatoolkit
                 pkgs.cudaPackages.cudnn
