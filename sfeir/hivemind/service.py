@@ -1,6 +1,7 @@
 import os
 
 import bentoml
+import openllm
 from bentoml.io import JSON
 from langchain.chains import ConversationalRetrievalChain
 from langchain.llms import OpenLLM
@@ -19,6 +20,9 @@ llm = OpenLLM(
     model_id=os.environ["OPENLLM_LLAMA_MODEL_ID"],
     embedded=False,
     quantize="int4",
+    llm_config=openllm.LlamaConfig(
+        use_llama2_prompt=True,
+    ),
 )
 embeddings = HivemindEmbeddings(model_name="pt-sentence-transformers-all-mpnet-base-v2")
 vectorstore = DeepLake(

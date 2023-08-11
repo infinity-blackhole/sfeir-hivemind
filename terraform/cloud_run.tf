@@ -8,7 +8,7 @@ resource "google_cloud_run_v2_service" "default" {
   launch_stage = "BETA"
 
   template {
-    timeout               = "1200s"
+    timeout               = "600s"
     service_account       = module.service_account.email
     execution_environment = "EXECUTION_ENVIRONMENT_GEN2"
     scaling {
@@ -59,7 +59,7 @@ resource "google_cloud_run_v2_service" "default" {
           path = "/readyz"
           port = 3000
         }
-        initial_delay_seconds = 120
+        initial_delay_seconds = 240
       }
       volume_mounts {
         name       = "torch-cache"
