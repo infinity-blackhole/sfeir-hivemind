@@ -8,9 +8,14 @@ build:
       custom:
         buildCommand: |
           if [ -z "$PUSH_IMAGE" ]; then
-            python -m sfeir.hivemind.build -t $IMAGE
+            python -m sfeir.hivemind.build \
+              --tag $IMAGE \
+              --cache-from $IMAGE
           else
-            python -m sfeir.hivemind.build -t $IMAGE --push
+            python -m sfeir.hivemind.build \
+              --tag $IMAGE \
+              --cache-from $IMAGE \
+              --push
           fi
         dependencies:
           paths:

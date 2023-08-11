@@ -48,7 +48,7 @@ def run(opts: argparse.Namespace):
         image_tag=tuple(opts.tag),
         features=["grpc", "tracing"],
         push=opts.push,
-        cache_from=opts.tag,
+        cache_from=opts.cache_from,
     )
 
     _logger.info(f"Built Docker image {opts.tag} for BentoML service {bento.tag}")
@@ -58,6 +58,7 @@ def parse_opts():
     parser = argparse.ArgumentParser()
     parser.add_argument("--tag", "-t", type=str, nargs="+", required=True)
     parser.add_argument("--push", action="store_true")
+    parser.add_argument("--cache-from", type=str)
     return parser.parse_args()
 
 
