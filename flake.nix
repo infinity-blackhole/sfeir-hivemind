@@ -50,6 +50,8 @@
               };
               packages = [
                 pkgs.nixpkgs-fmt
+                pkgs.stdenv.cc.cc.lib
+                pkgs.python310
                 pkgs.nodejs
                 pkgs.glab
                 pkgs.gh
