@@ -49,6 +49,10 @@ def run(opts: argparse.Namespace):
         features=["grpc", "io-json", "tracing-otlp"],
         push=opts.push,
         cache_from=opts.cache_from,
+        label={
+            "org.opencontainers.image.source": "https://github.com/infinity-blackhole/sfeir-hivemind",
+            "org.opencontainers.image.licenses": "MIT",
+        },
     )
 
     _logger.info(f"Built Docker image {opts.tag} for BentoML service {bento.tag}")
