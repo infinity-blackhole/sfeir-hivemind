@@ -10,11 +10,11 @@ build:
           if [ -z "$PUSH_IMAGE" ]; then
             python -m sfeir.hivemind.build \
               --tag $IMAGE \
-              --cache-from $IMAGE
+              --cache-from ghcr.io/infinity-blackhole/sfeir-hivemind
           else
             python -m sfeir.hivemind.build \
               --tag $IMAGE \
-              --cache-from $IMAGE \
+              --cache-from ghcr.io/infinity-blackhole/sfeir-hivemind \
               --push
           fi
         dependencies:
