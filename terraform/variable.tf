@@ -16,10 +16,16 @@ variable "display_name" {
   default     = "Sfeir Hivemind"
 }
 
-variable "location" {
+variable "region" {
   description = "The location of the hivemind"
   type        = string
   default     = "europe-west1"
+}
+
+variable "zone" {
+  description = "The zone of the hivemind"
+  type        = string
+  default     = "europe-west1-b"
 }
 
 variable "labels" {

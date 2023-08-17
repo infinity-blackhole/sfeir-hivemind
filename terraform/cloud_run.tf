@@ -2,7 +2,7 @@ resource "google_cloud_run_v2_service" "default" {
   provider     = google-beta
   project      = var.project_id
   name         = var.name
-  location     = var.location
+  location     = var.region
   labels       = var.labels
   ingress      = "INGRESS_TRAFFIC_ALL"
   launch_stage = "BETA"
@@ -59,7 +59,7 @@ resource "google_cloud_run_v2_service" "default" {
           path = "/readyz"
           port = 3000
         }
-        initial_delay_seconds = 240
+        initial_delay_seconds = 140
       }
       volume_mounts {
         name       = "torch-cache"
@@ -85,7 +85,7 @@ resource "google_cloud_run_v2_service" "default" {
 resource "google_cloud_run_v2_service_iam_member" "default" {
   provider = google-beta
   project  = var.project_id
-  location = var.location
+  location = var.region
   name     = google_cloud_run_v2_service.default.name
   role     = "roles/run.invoker"
   member   = "allUsers"

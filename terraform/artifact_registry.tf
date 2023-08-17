@@ -2,7 +2,7 @@ module "docker_artifact_registry" {
   source     = "github.com/GoogleCloudPlatform/cloud-foundation-fabric//modules/artifact-registry"
   project_id = var.project_id
   name       = var.name
-  location   = var.location
+  location   = var.region
   labels     = var.labels
   format = {
     docker = {

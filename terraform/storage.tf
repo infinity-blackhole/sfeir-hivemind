@@ -3,7 +3,7 @@ module "bucket" {
   project_id    = var.project_id
   prefix        = var.project_id
   name          = "${var.name}-deep-lake-datasets"
-  location      = var.location
+  location      = var.region
   storage_class = "REGIONAL"
   labels        = var.labels
   iam = {
